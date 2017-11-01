@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Git," />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -94,18 +94,18 @@
 
 
 
-<meta name="description" content="Assume the following history exists and the current branch is “master”. 123      A---B---C topic     /D---E---F---G master From this point, the result of either of the following commands: 12git rebase">
-<meta name="keywords" content="Git">
+<meta name="description" content="Intercept Touch Events in a ViewGroupThe onInterceptTouchEvent() method is called whenever a touch event is detected on the surface of a ViewGroup, including on the surface of its children. If onInter">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git rebase example">
-<meta property="og:url" content="http://localhost:4000/Git/git-rebase-example">
+<meta property="og:title" content="Manage touch events in a ViewGroup">
+<meta property="og:url" content="my-jabin.github.io/Android/2017-09-30-manage-touch-events-in-a-ViewGroup">
 <meta property="og:site_name" content="Yanbin&#39;s Blog">
-<meta property="og:description" content="Assume the following history exists and the current branch is “master”. 123      A---B---C topic     /D---E---F---G master From this point, the result of either of the following commands: 12git rebase">
+<meta property="og:description" content="Intercept Touch Events in a ViewGroupThe onInterceptTouchEvent() method is called whenever a touch event is detected on the surface of a ViewGroup, including on the surface of its children. If onInter">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-30T16:27:18.303Z">
+<meta property="og:updated_time" content="2017-09-30T16:36:14.740Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git rebase example">
-<meta name="twitter:description" content="Assume the following history exists and the current branch is “master”. 123      A---B---C topic     /D---E---F---G master From this point, the result of either of the following commands: 12git rebase">
+<meta name="twitter:title" content="Manage touch events in a ViewGroup">
+<meta name="twitter:description" content="Intercept Touch Events in a ViewGroupThe onInterceptTouchEvent() method is called whenever a touch event is detected on the surface of a ViewGroup, including on the surface of its children. If onInter">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://localhost:4000/Git/git-rebase-example"/>
+  <link rel="canonical" href="my-jabin.github.io/Android/2017-09-30-manage-touch-events-in-a-ViewGroup"/>
 
 
 
 
 
-  <title>git rebase example | Yanbin's Blog</title>
+  <title>Manage touch events in a ViewGroup | Yanbin's Blog</title>
   
 
 
@@ -317,7 +317,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://localhost:4000/Git/git-rebase-example">
+    <link itemprop="mainEntityOfPage" href="my-jabin.github.io/Android/2017-09-30-manage-touch-events-in-a-ViewGroup">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yanbin Hu">
@@ -334,7 +334,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">git rebase example</h1>
+          <h1 class="post-title" itemprop="name headline">Manage touch events in a ViewGroup</h1>
         
 
         <div class="post-meta">
@@ -346,7 +346,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-30T14:47:45+02:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-30T18:24:18+02:00">
                 2017-09-30
               </time>
             
@@ -369,8 +369,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
                   </a>
                 </span>
 
@@ -406,26 +406,10 @@
       
 
       
-        <p>Assume the following history exists and the current branch is “master”.</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      <span class="comment">A</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">C</span> <span class="comment">topic</span></div><div class="line"><span class="comment"></span>     <span class="comment">/</span></div><div class="line"><span class="comment">D</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span> <span class="comment">master</span></div></pre></td></tr></table></figure>
-<p>From this point, the result of either of the following commands:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase master</div><div class="line">git rebase master topic</div></pre></td></tr></table></figure>
-<p>would be:</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">              <span class="comment">A'</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B'</span><span class="literal">-</span><span class="literal">-</span><span class="comment">C'</span> <span class="comment">topic</span></div><div class="line"><span class="comment"></span>             <span class="comment">/</span></div><div class="line"><span class="comment">D</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span> <span class="comment">master</span></div></pre></td></tr></table></figure>
-<p><strong>NOTE</strong>:<br><blockquote><p>git rebase master topic == git checkout topic &amp; git rebase master.<br>When rebase exists, <code>topic</code> will remain the checkout-out branch</p>
-</blockquote></p>
-<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><ol>
-<li>Create a <code>A.txt</code> file in <code>master</code> branch</li>
-<li>Create and change to branch <code>test</code> and create a new file <code>B.txt</code>.</li>
-<li>Back to branch <code>master</code> and then create a new file <code>C.txt</code></li>
-</ol>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">master: A---C</div><div class="line">         \</div><div class="line"><span class="keyword">test:     </span>B</div></pre></td></tr></table></figure>
-<p>The result of following command:(now we are in branch <code>master</code>)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase <span class="built_in">test</span> master</div><div class="line">git rebase <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
-<p>would be:(we still in branch <code>master</code>)<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">      <span class="literal">master</span></div><div class="line">        |</div><div class="line">A---C---B</div><div class="line">        |</div><div class="line">      test</div></pre></td></tr></table></figure></p>
-<p>It works by going to the commen ancestor of the two branches(here is <code>A</code>), getting the diff introduced by each commit of the branch you’re on(here branch <code>test</code>), saving those diffs to temporary files, resetting the current branch to the same commit as the branch you are rebasing onto(branch <code>master</code>, set the HEAD to commit <code>C</code>), then applying each change in turn. Finally go back to branch <code>master</code> and do a fast-forward merge<br><strong>NOTE</strong></p>
-<blockquote>
-<p>Since there exists not diffs, commit <code>B</code> is simply appended to commit <code>C</code></p>
-</blockquote>
+        <h2 id="Intercept-Touch-Events-in-a-ViewGroup"><a href="#Intercept-Touch-Events-in-a-ViewGroup" class="headerlink" title="Intercept Touch Events in a ViewGroup"></a>Intercept Touch Events in a ViewGroup</h2><p>The <code>onInterceptTouchEvent()</code> method is called whenever a touch event is detected on the surface of a <code>ViewGroup</code>, including on the surface of its children. If <code>onInterceptTouchEvent()</code> return <strong>true</strong>, the <code>MotionEvent</code> is intercepted, meaning it will not be passed on to the child, but rather to the <code>onTouchEvent()</code> method of the parent.</p>
+<p>Simply thinking of the process in code-presentation as follows:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span>(!onInterceptTouchEvent())&#123;</div><div class="line">		<span class="keyword">for</span>(View child : children)&#123;</div><div class="line">			<span class="keyword">if</span>(child.dispatchTouchEvent(ev))</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(ev);&#125;</div></pre></td></tr></table></figure></p>
+<p>The <code>onInterceptTouchEvent()</code> method gives a parent the chance to see any touch event before its children. If you return true from <code>onInterceptTouchEvent()</code> the child view receives an <strong>ACTION_CANCEL</strong>  and the events from that points forward are sent to parent’s <code>onTouchEvent()</code> method for the usual handling.</p>
+<p><code>onInterceptTouchEvent()</code> method can also return <strong>false</strong> and simply spy on events as the travel down the view hierarchy to their usual targets, which will handle the events with their own <code>onTouchEvent()</code>.</p>
 
       
     </div>
@@ -443,7 +427,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Git/" rel="tag"># Git</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
         </div>
       
@@ -456,14 +440,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/Git/2017-09-30-git-rebase-example" rel="next" title="git rebase example">
+                <i class="fa fa-chevron-left"></i> git rebase example
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/Android/manage-touch-events-in-a-ViewGroup" rel="prev" title="Manage touch events in a ViewGroup">
-                Manage touch events in a ViewGroup <i class="fa fa-chevron-right"></i>
+              <a href="/Bootstrap/2017-10-18-bootstrap4-tutorial" rel="prev" title="Bootstrap Tutorial">
+                Bootstrap Tutorial <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -611,7 +599,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Example"><span class="nav-number">1.</span> <span class="nav-text">Example</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intercept-Touch-Events-in-a-ViewGroup"><span class="nav-number">1.</span> <span class="nav-text">Intercept Touch Events in a ViewGroup</span></a></li></ol></div>
             
 
           </div>
