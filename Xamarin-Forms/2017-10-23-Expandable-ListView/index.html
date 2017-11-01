@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Xamarin.Forms," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Xamarin.Forms Expandable ListViewThis demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from this blog. If you prefer first to know how to create a e">
+<meta name="keywords" content="Xamarin.Forms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Expandable ListView">
+<meta property="og:url" content="my-jabin.github.io/Xamarin-Forms/2017-10-23-Expandable-ListView/index.html">
+<meta property="og:site_name" content="Yanbin&#39;s Blog">
+<meta property="og:description" content="Xamarin.Forms Expandable ListViewThis demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from this blog. If you prefer first to know how to create a e">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="/Xamarin-Forms/2017-10-23-Expandable-ListView/expandableListView.gif">
+<meta property="og:updated_time" content="2017-11-01T14:07:56.615Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Expandable ListView">
+<meta name="twitter:description" content="Xamarin.Forms Expandable ListViewThis demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from this blog. If you prefer first to know how to create a e">
+<meta name="twitter:image" content="/Xamarin-Forms/2017-10-23-Expandable-ListView/expandableListView.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="my-jabin.github.io/Xamarin-Forms/2017-10-23-Expandable-ListView/"/>
+
+
+
+
+
+  <title>Expandable ListView | Yanbin's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yanbin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Stay hungry. Stay foolish.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="my-jabin.github.io/Xamarin-Forms/2017-10-23-Expandable-ListView/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yanbin Hu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yanbin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Expandable ListView</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-23T20:42:38+02:00">
+                2017-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Xamarin-Forms/" itemprop="url" rel="index">
+                    <span itemprop="name">Xamarin.Forms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Xamarin-Forms-Expandable-ListView"><a href="#Xamarin-Forms-Expandable-ListView" class="headerlink" title="Xamarin.Forms Expandable ListView"></a>Xamarin.Forms Expandable ListView</h1><p>This demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from <a href="http://www.compliancestudio.io/blog/xamarin-forms-expandable-listview" target="_blank" rel="external">this blog</a>. If you prefer first to know how to create a expandable ListView without MVVM pattern, please read the blog, and then go back to read this one.<br>The following gif shows the result of this demo.<br><img src="/Xamarin-Forms/2017-10-23-Expandable-ListView/expandableListView.gif" alt="expandableListView.gif" title=""></p>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>An easy example, a continent include many countries, so here we create two models, <code>Continent</code> and <code>Country</code>. <code>Continent</code> has a <code>Name</code> and a list with several countries. <code>Country</code> has three property, <code>Name</code>,<code>Code</code> and <code>Flag</code>.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Continent</span>  </div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">    <span class="keyword">public</span> List&lt;Country&gt; Countries &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span> List&lt;Country&gt;();</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Country</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Code &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Flag &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><p>The view is the page, layout, UI controls of what a user sees on the screen. In this example is the <code>ExamplePage</code>.</p>
+<h2 id="ViewModel"><a href="#ViewModel" class="headerlink" title="ViewModel"></a>ViewModel</h2><p>For exposing public properties of a model and some other properties that are useful for presenting , we need a <code>ViewModel</code> for each <code>Model</code>. <code>Country</code> model corresponds to a <code>CountryViewModel</code> and <code>Continent</code> corresponds to a <code>ContinentViewModel</code>.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CountryViewModel</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> Country _country;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CountryViewModel</span>(<span class="params">Country country</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>._country = country;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> _country.Name; &#125; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Code &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> _country.Code; &#125; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Flag &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> _country.Flag; &#125; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>ContinentViewModel</code> has a <code>Expanded</code> property which keeps track on whether the continent is expanded or collapsed. <code>StateIcon</code> will be an expaned icon when the list is expanded and collapsed when it’s not.</p>
+<p><code>ContinentViewModel</code> implements <code>INotifyPropertyChanged</code> interfacce so that any changes on properties will be reflected in our list view. For example, when property <code>Expanded</code> changes, the <code>StateIcon</code> should be changed too, so we need to notify our <code>ListView</code> that the both properties are changed by calling <code>OnPropertyChanged</code> methods.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">OnPropertyChanged(<span class="keyword">new</span> PropertyChangedEventArgs(<span class="string">"Expanded"</span>));</div><div class="line">OnPropertyChanged(<span class="keyword">new</span> PropertyChangedEventArgs(<span class="string">"StateIcon"</span>));</div></pre></td></tr></table></figure></p>
+<p>Notice that <code>ContinentViewModel</code> must be subclass of <code>ObservableCollection</code> with generic type of <code>CountryViewModel</code>. Items of the <code>ObservableCollection</code> will be shown on the <code>ListView</code>. Here I use a light-weight MVVM helper classes named <a href="https://github.com/jamesmontemagno/mvvm-helpers" target="_blank" rel="external">MVVMHelpers</a> of James, it has a awesome <code>ObservableRangeCollection</code> which is a subclass of <code>ObservableCollection</code> and can add, remove or replace a range of object. More detail on this <a href="https://channel9.msdn.com/Shows/XamarinShow/The-Xamarin-Show-12-MVVM-Helpers" target="_blank" rel="external">video</a>.</p>
+<p>Constuctor of <code>ContinentViewModel</code> takes a <code>Continent</code> object which contains a country list and set <code>Expanded</code> by default to be true. In the constuctor method, a backup variable for storing <code>CountryViewModel</code> obejcts is populated with the countries of <code>Continent</code>. This backup variable is added to the <code>ContinentViewModel</code> if <code>Expanded</code> property is <code>true</code>.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">public class ContinentViewModel : ObservableRangeCollection&lt;CountryViewModel&gt;, INotifyPropertyChanged  </div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> Continent _continent;</div><div class="line"></div><div class="line">    <span class="comment">// It's a backup variable for storing CountryViewModel objects</span></div><div class="line">    <span class="keyword">private</span> ObservableRangeCollection&lt;CountryViewModel&gt; Countries</div><div class="line">        = <span class="keyword">new</span> ObservableRangeCollection&lt;CountryViewModel&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ContinentViewModel</span>(<span class="params">Continent continent, <span class="keyword">bool</span> expanded = <span class="literal">true</span></span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>._continent = continent;</div><div class="line">        <span class="keyword">this</span>._expanded = expanded;</div><div class="line">        <span class="comment">// Continent has many countries. Once we get it, init CountryViewModel and store it in a backup variable</span></div><div class="line">        <span class="keyword">foreach</span> (Country c <span class="keyword">in</span> continent.Countries) &#123;</div><div class="line">            Countries.Add(<span class="keyword">new</span> CountryViewModel(c));</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// ContinentViewModel add a range with CountryViewModel</span></div><div class="line">        <span class="keyword">if</span>(expanded)</div><div class="line">            <span class="keyword">this</span>.AddRange(Countries);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> _continent.Name; &#125; &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">bool</span> _expanded;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">bool</span> Expanded</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _expanded; &#125;</div><div class="line">        <span class="keyword">set</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (_expanded != <span class="keyword">value</span>)</div><div class="line">            &#123;</div><div class="line">                _expanded = <span class="keyword">value</span>;</div><div class="line">                OnPropertyChanged(<span class="keyword">new</span> PropertyChangedEventArgs(<span class="string">"Expanded"</span>));</div><div class="line">                OnPropertyChanged(<span class="keyword">new</span> PropertyChangedEventArgs(<span class="string">"StateIcon"</span>));</div><div class="line">                <span class="keyword">if</span> (_expanded)</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">this</span>.AddRange(Countries);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">this</span>.Clear();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> StateIcon</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> Expanded ? <span class="string">"up"</span> : <span class="string">"down"</span>; &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Beside the above two ViewModels, another ViewModel is also required—<code>ExamplePageViewModel</code> corresponds to <code>ExamplePage</code>. Most of logic to <code>ExamplePage</code> should be handled in <code>ExamplePageViewModel</code> but not in <code>ExamplePage.xaml.cs</code>. <code>ExamplePage</code> sets the <code>BindingContext</code> to the <code>ExamplePageViewModel</code>.<br>Once the <code>ExamplePage</code> is appearing, it calls <code>OnAppearing</code> methods, this is the apporiate place to load data from server. This job belongs to our <code>ExamplePageViewModel</code>, and it simply execute its command to load data. There is another method is used for handling property changed event. If the <code>StateIcon</code> has changed and new icon is inflated, it performs fade animation. Now nothing more code should be here, and logic handling should be in <code>ExamplePageViewModel</code>.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">ExamplePage</span> : <span class="title">ContentPage</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> ExamplePageViewModel ViewModel &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> (ExamplePageViewModel)BindingContext; &#125;</div><div class="line">        <span class="keyword">set</span> &#123; BindingContext = <span class="keyword">value</span>; &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ExamplePage</span>(<span class="params">ExamplePageViewModel viewModel</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        InitializeComponent();</div><div class="line">        <span class="keyword">this</span>.ViewModel = viewModel;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnAppearing</span>(<span class="params"></span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">base</span>.OnAppearing();</div><div class="line">        ViewModel.LoadDataCommand.Execute(<span class="literal">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">StateImage_PropertyChanged</span>(<span class="params"><span class="keyword">object</span> sender, System.ComponentModel.PropertyChangedEventArgs e</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">if</span> (e.PropertyName.Equals(<span class="string">"Source"</span>)) &#123;</div><div class="line">            <span class="keyword">var</span> image = sender <span class="keyword">as</span> Image;</div><div class="line">            image.Opacity = <span class="number">0</span>;</div><div class="line">            image.FadeTo(<span class="number">1</span>, <span class="number">1000</span>);</div><div class="line">        &#125;      </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>ExamplePageViewModel</code> has a <code>List</code> of type <code>ObservableRangeCollection</code> and two commands. <code>List</code> is the data source for <code>ListView</code>. <code>LoadDataCommand</code> is for loading data from server and <code>HeaderClickCommand</code> is for <code>Continent</code> click event handling.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ExamplePageViewModel</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> ObservableRangeCollection&lt;ContinentViewModel&gt; List &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</div><div class="line">        = <span class="keyword">new</span> ObservableRangeCollection&lt;ContinentViewModel&gt;();</div><div class="line"></div><div class="line">    <span class="keyword">public</span> ICommand LoadDataCommand &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</div><div class="line">    <span class="keyword">public</span> ICommand HeaderClickCommand &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;                 </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ExamplePageViewModel</span>(<span class="params"></span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>.LoadDataCommand = <span class="keyword">new</span> Command(<span class="keyword">async</span> () =&gt; <span class="keyword">await</span> ExecuteLoadDataCommand());</div><div class="line">        <span class="keyword">this</span>.HeaderClickCommand = <span class="keyword">new</span> Command&lt;ContinentViewModel&gt;((item) =&gt; ExecuteHeaderClickCommand(item));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">async</span> Task <span class="title">ExecuteLoadDataCommand</span>(<span class="params"></span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">    	...</div><div class="line">    	...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ExecuteHeaderClickCommand</span>(<span class="params">ContinentViewModel item</span>) </span>&#123;</div><div class="line">        item.Expanded = !item.Expanded;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Data-Binding"><a href="#Data-Binding" class="headerlink" title="Data Binding"></a>Data Binding</h2><p><code>ExamplePage</code> contains only a <code>ListView</code> displayed with customized group header and item. Group header template is a view of <code>RelativeLayout</code>, it shows a <code>Lable</code> and an <code>Image</code>. The <code>TapGestureRecognizer</code> of the <code>RelativeLayout</code> allows to click the header and expand or collapse the <code>ListView</code>. Once user click the group header, <code>HeaderClickCommand</code> will be executed and the <code>Expanded</code> property of <code>ContinentViewModel</code> will be updated. Since we have written the <code>Set</code> method of property <code>Expanded</code>, it changes the content of <code>ContinentViewModel</code>—add a range or clear itself.</p>
+<p>The bindable property <code>ItemSource</code> of <code>ListView</code> is bound to <code>List</code> which is a public property of <code>ExamplePageViewModel</code>.<br>The <code>GroupHeaderTemplate</code> of <code>ListView</code> is bound to each item of <code>List</code> object, which is a <code>ContinentViewModel</code> object.<br>The <code>ItemTemplate</code> of <code>ListView</code> is bound to each item of the <code>ContinentViewModel</code> object, which is a <code>CountryViewModel</code> object.</p>
+<hr>
+<p>Source Code is <a href="https://github.com/my-jabin/ExpandableListView-Xamarin" target="_blank" rel="external">here</a></p>
+<p>package used in this example:</p>
+<ul>
+<li><a href="https://github.com/jamesmontemagno/mvvm-helpers" target="_blank" rel="external">MvvmHelpers</a> from James</li>
+<li><a href="https://github.com/jamesmontemagno/ImageCirclePlugin" target="_blank" rel="external">CircleImage</a> from James</li>
+</ul>
+<p>Reference : <a href="http://www.compliancestudio.io/blog/xamarin-forms-expandable-listview" target="_blank" rel="external">http://www.compliancestudio.io/blog/xamarin-forms-expandable-listview</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xamarin-Forms/" rel="tag"># Xamarin.Forms</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Bootstrap/2017-10-18-bootstrap4-tutorial/" rel="next" title="Bootstrap Tutorial">
+                <i class="fa fa-chevron-left"></i> Bootstrap Tutorial
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Yanbin Hu" />
+          <p class="site-author-name" itemprop="name">Yanbin Hu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/my-jabin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Xamarin-Forms-Expandable-ListView"><span class="nav-number">1.</span> <span class="nav-text">Xamarin.Forms Expandable ListView</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">1.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">1.2.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewModel"><span class="nav-number">1.3.</span> <span class="nav-text">ViewModel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Binding"><span class="nav-number">1.4.</span> <span class="nav-text">Data Binding</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yanbin Hu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
