@@ -65,7 +65,7 @@
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Yanbin&#39;s Blog">
 <meta property="og:description" content="Cloning and merging, Object.assignCopying an object variable creates one more reference to the same object. What if we need to duplicate an object? We can use the method Object.assign for that:1Object">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-02T15:41:51.440Z">
+<meta property="og:updated_time" content="2017-11-02T15:54:24.250Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cloning and Merging in JavaScript">
 <meta name="twitter:description" content="Cloning and merging, Object.assignCopying an object variable creates one more reference to the same object. What if we need to duplicate an object? We can use the method Object.assign for that:1Object">
@@ -145,6 +145,15 @@
 
 
 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109176342-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
 
 
@@ -372,6 +381,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/JavaScript/2017-11-02-Cloning-and-Merging-in-JavaScript/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="/JavaScript/2017-11-02-Cloning-and-Merging-in-JavaScript/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -398,8 +418,7 @@
       
         <h1 id="Cloning-and-merging-Object-assign"><a href="#Cloning-and-merging-Object-assign" class="headerlink" title="Cloning and merging, Object.assign"></a>Cloning and merging, Object.assign</h1><p>Copying an object variable creates one more reference to the same object. What if we need to duplicate an object?</p>
 <p>We can use the method <code>Object.assign</code> for that:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.assign(dest[,src1,src2,...])</div></pre></td></tr></table></figure></p>
-<p>It copies the properties of all object <code>src1, src2, ...</code> into <code>dest</code>. In other words, properties of all arguments starting from the 2nd are copied into the 1st, then it returns <code>dest</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">"John"</span>&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> permission1 = &#123; <span class="attr">canView</span>: <span class="literal">true</span>&#125;;</div><div class="line"><span class="keyword">let</span> permission2 = &#123; <span class="attr">canEdit</span>: <span class="literal">true</span>&#125;;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.assign(user, permission1, permisson2);</div><div class="line"><span class="comment">// now user = &#123;name:"John", canView: true, canEdit: true&#125;</span></div></pre></td></tr></table></figure>
+<p>It copies the properties of all object <code>src1, src2, ...</code> into <code>dest</code>. In other words, properties of all arguments starting from the 2nd are copied into the 1st, then it returns <code>dest</code><br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">"John"</span>&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> permission1 = &#123; <span class="attr">canView</span>: <span class="literal">true</span>&#125;;</div><div class="line"><span class="keyword">let</span> permission2 = &#123; <span class="attr">canEdit</span>: <span class="literal">true</span>&#125;;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.assign(user, permission1, permisson2);</div><div class="line"><span class="comment">// now user = &#123;name:"John", canView: true, canEdit: true&#125;</span></div></pre></td></tr></table></figure></p>
 <p>If the receiving object (<code>user</code>) already has the same named property, it will overwritten:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">"John"</span> &#125;;</div><div class="line"></div><div class="line"><span class="comment">// overwrite name, add isAdmin</span></div><div class="line"><span class="built_in">Object</span>.assign(user, &#123; <span class="attr">name</span>: <span class="string">"Pete"</span>, <span class="attr">isAdmin</span>: <span class="literal">true</span> &#125;);</div><div class="line"></div><div class="line"><span class="comment">// now user = &#123; name: "Pete", isAdmin: true &#125;</span></div></pre></td></tr></table></figure></p>
 <p>Until now we assumed that all properties of <code>user</code> are primitive, But properties can be references to other object. What do do with them? Like this:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123;</div><div class="line">name: <span class="string">"John"</span>,</div><div class="line">sizes: &#123;</div><div class="line">height: <span class="number">182</span>,</div><div class="line">width: <span class="number">50</span></div><div class="line">&#125;&#125;;</div><div class="line"></div><div class="line">alert( user.sizes.height ); <span class="comment">// 182</span></div></pre></td></tr></table></figure></p>
 <p>Now it’s not enough to copy <code>clone.sizes = user.sizes</code>, because the <code>user.sizes</code> is an object, it will be copied by reference. So <code>clone</code> and <code>user</code> will share the same sizes. Like this:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123;</div><div class="line">  name: <span class="string">"John"</span>,</div><div class="line">  sizes: &#123;</div><div class="line">    height: <span class="number">182</span>,</div><div class="line">    width: <span class="number">50</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> clone = <span class="built_in">Object</span>.assign(&#123;&#125;, user);</div><div class="line"></div><div class="line">alert( user.sizes === clone.sizes ); <span class="comment">// true, same object</span></div><div class="line"></div><div class="line"><span class="comment">// user and clone share sizes</span></div><div class="line">user.sizes.width++;       <span class="comment">// change a property from one place</span></div><div class="line">alert(clone.sizes.width); <span class="comment">// 51, see the result from the other one</span></div></pre></td></tr></table></figure></p>
@@ -475,6 +494,13 @@
 
           
   <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     
   </div>
 
@@ -729,6 +755,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://jabin-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'my-jabin.github.io/JavaScript/2017-11-02-Cloning-and-Merging-in-JavaScript/';
+          this.page.identifier = '/JavaScript/2017-11-02-Cloning-and-Merging-in-JavaScript/';
+          this.page.title = 'Cloning and Merging in JavaScript';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jabin-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -741,10 +787,6 @@
   
 
 
-
-
-
-  
 
 
 

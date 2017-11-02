@@ -65,7 +65,7 @@
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Yanbin&#39;s Blog">
 <meta property="og:description" content="Intercept Touch Events in a ViewGroupThe onInterceptTouchEvent() method is called whenever a touch event is detected on the surface of a ViewGroup, including on the surface of its children. If onInter">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-30T16:36:14.740Z">
+<meta property="og:updated_time" content="2017-11-02T15:55:27.257Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Manage touch events in a ViewGroup">
 <meta name="twitter:description" content="Intercept Touch Events in a ViewGroupThe onInterceptTouchEvent() method is called whenever a touch event is detected on the surface of a ViewGroup, including on the surface of its children. If onInter">
@@ -145,6 +145,15 @@
 
 
 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109176342-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
 
 
@@ -372,6 +381,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Android/2017-09-30-manage-touch-events-in-a-ViewGroup/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="/Android/2017-09-30-manage-touch-events-in-a-ViewGroup/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -396,8 +416,7 @@
       
 
       
-        <h2 id="Intercept-Touch-Events-in-a-ViewGroup"><a href="#Intercept-Touch-Events-in-a-ViewGroup" class="headerlink" title="Intercept Touch Events in a ViewGroup"></a>Intercept Touch Events in a ViewGroup</h2><p>The <code>onInterceptTouchEvent()</code> method is called whenever a touch event is detected on the surface of a <code>ViewGroup</code>, including on the surface of its children. If <code>onInterceptTouchEvent()</code> return <strong>true</strong>, the <code>MotionEvent</code> is intercepted, meaning it will not be passed on to the child, but rather to the <code>onTouchEvent()</code> method of the parent.</p>
-<p>Simply thinking of the process in code-presentation as follows:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span>(!onInterceptTouchEvent())&#123;</div><div class="line">		<span class="keyword">for</span>(View child : children)&#123;</div><div class="line">			<span class="keyword">if</span>(child.dispatchTouchEvent(ev))</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(ev);&#125;</div></pre></td></tr></table></figure></p>
+        <h2 id="Intercept-Touch-Events-in-a-ViewGroup"><a href="#Intercept-Touch-Events-in-a-ViewGroup" class="headerlink" title="Intercept Touch Events in a ViewGroup"></a>Intercept Touch Events in a ViewGroup</h2><p>The <code>onInterceptTouchEvent()</code> method is called whenever a touch event is detected on the surface of a <code>ViewGroup</code>, including on the surface of its children. If <code>onInterceptTouchEvent()</code> return <strong>true</strong>, the <code>MotionEvent</code> is intercepted, meaning it will not be passed on to the child, but rather to the <code>onTouchEvent()</code> method of the parent.<br><a id="more"></a><br>Simply thinking of the process in code-presentation as follows:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span>(!onInterceptTouchEvent())&#123;</div><div class="line">		<span class="keyword">for</span>(View child : children)&#123;</div><div class="line">			<span class="keyword">if</span>(child.dispatchTouchEvent(ev))</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(ev);&#125;</div></pre></td></tr></table></figure></p>
 <p>The <code>onInterceptTouchEvent()</code> method gives a parent the chance to see any touch event before its children. If you return true from <code>onInterceptTouchEvent()</code> the child view receives an <strong>ACTION_CANCEL</strong>  and the events from that points forward are sent to parent’s <code>onTouchEvent()</code> method for the usual handling.</p>
 <p><code>onInterceptTouchEvent()</code> method can also return <strong>false</strong> and simply spy on events as the travel down the view hierarchy to their usual targets, which will handle the events with their own <code>onTouchEvent()</code>.</p>
 
@@ -471,6 +490,13 @@
 
           
   <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     
   </div>
 
@@ -725,6 +751,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://jabin-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'my-jabin.github.io/Android/2017-09-30-manage-touch-events-in-a-ViewGroup/';
+          this.page.identifier = '/Android/2017-09-30-manage-touch-events-in-a-ViewGroup/';
+          this.page.title = 'Manage touch events in a ViewGroup';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jabin-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -737,10 +783,6 @@
   
 
 
-
-
-
-  
 
 
 

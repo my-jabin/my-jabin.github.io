@@ -65,7 +65,7 @@
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -103,7 +103,7 @@
 <meta property="og:description" content="Xamarin.Forms Expandable ListViewThis demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from this blog. If you prefer first to know how to create a e">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="/Xamarin-Forms/2017-10-23-Expandable-ListView/expandableListView.gif">
-<meta property="og:updated_time" content="2017-11-01T14:07:56.615Z">
+<meta property="og:updated_time" content="2017-11-02T15:54:30.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Expandable ListView">
 <meta name="twitter:description" content="Xamarin.Forms Expandable ListViewThis demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from this blog. If you prefer first to know how to create a e">
@@ -147,6 +147,15 @@
 
 
 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109176342-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
 
 
@@ -374,6 +383,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Xamarin-Forms/2017-10-23-Expandable-ListView/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="/Xamarin-Forms/2017-10-23-Expandable-ListView/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -398,7 +418,7 @@
       
 
       
-        <h1 id="Xamarin-Forms-Expandable-ListView"><a href="#Xamarin-Forms-Expandable-ListView" class="headerlink" title="Xamarin.Forms Expandable ListView"></a>Xamarin.Forms Expandable ListView</h1><p>This demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from <a href="http://www.compliancestudio.io/blog/xamarin-forms-expandable-listview" target="_blank" rel="external">this blog</a>. If you prefer first to know how to create a expandable ListView without MVVM pattern, please read the blog, and then go back to read this one.<br>The following gif shows the result of this demo.<br><img src="/Xamarin-Forms/2017-10-23-Expandable-ListView/expandableListView.gif" alt="expandableListView.gif" title=""></p>
+        <h1 id="Xamarin-Forms-Expandable-ListView"><a href="#Xamarin-Forms-Expandable-ListView" class="headerlink" title="Xamarin.Forms Expandable ListView"></a>Xamarin.Forms Expandable ListView</h1><p>This demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from <a href="http://www.compliancestudio.io/blog/xamarin-forms-expandable-listview" target="_blank" rel="external">this blog</a>. If you prefer first to know how to create a expandable ListView without MVVM pattern, please read the blog, and then go back to read this one.<br>The following gif shows the result of this demo.<br><img src="/Xamarin-Forms/2017-10-23-Expandable-ListView/expandableListView.gif" alt="expandableListView.gif" title=""><br><a id="more"></a></p>
 <h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>An easy example, a continent include many countries, so here we create two models, <code>Continent</code> and <code>Country</code>. <code>Continent</code> has a <code>Name</code> and a list with several countries. <code>Country</code> has three property, <code>Name</code>,<code>Code</code> and <code>Flag</code>.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Continent</span>  </div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">    <span class="keyword">public</span> List&lt;Country&gt; Countries &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125; = <span class="keyword">new</span> List&lt;Country&gt;();</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Country</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Code &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Flag &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><p>The view is the page, layout, UI controls of what a user sees on the screen. In this example is the <code>ExamplePage</code>.</p>
 <h2 id="ViewModel"><a href="#ViewModel" class="headerlink" title="ViewModel"></a>ViewModel</h2><p>For exposing public properties of a model and some other properties that are useful for presenting , we need a <code>ViewModel</code> for each <code>Model</code>. <code>Country</code> model corresponds to a <code>CountryViewModel</code> and <code>Continent</code> corresponds to a <code>ContinentViewModel</code>.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CountryViewModel</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> Country _country;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CountryViewModel</span>(<span class="params">Country country</span>)</span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">this</span>._country = country;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Name &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> _country.Name; &#125; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Code &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> _country.Code; &#125; &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">string</span> Flag &#123; <span class="keyword">get</span> &#123; <span class="keyword">return</span> _country.Flag; &#125; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -490,6 +510,13 @@
 
           
   <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
     
   </div>
 
@@ -744,6 +771,26 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://jabin-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'my-jabin.github.io/Xamarin-Forms/2017-10-23-Expandable-ListView/';
+          this.page.identifier = '/Xamarin-Forms/2017-10-23-Expandable-ListView/';
+          this.page.title = 'Expandable ListView';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jabin-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
 
 
 
@@ -756,10 +803,6 @@
   
 
 
-
-
-
-  
 
 
 

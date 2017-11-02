@@ -65,7 +65,7 @@
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -140,6 +140,15 @@
 
 
 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109176342-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
 
 
@@ -371,6 +380,17 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Git/2017-09-30-git-rebase-example/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="/Git/2017-09-30-git-rebase-example/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -396,29 +416,18 @@
 
       
         
-          
-            <p>Assume the following history exists and the current branch is “master”.</p>
+          <p>Assume the following history exists and the current branch is “master”.</p>
 <figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      <span class="comment">A</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">C</span> <span class="comment">topic</span></div><div class="line"><span class="comment"></span>     <span class="comment">/</span></div><div class="line"><span class="comment">D</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span> <span class="comment">master</span></div></pre></td></tr></table></figure>
 <p>From this point, the result of either of the following commands:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase master</div><div class="line">git rebase master topic</div></pre></td></tr></table></figure>
 <p>would be:</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">              <span class="comment">A'</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B'</span><span class="literal">-</span><span class="literal">-</span><span class="comment">C'</span> <span class="comment">topic</span></div><div class="line"><span class="comment"></span>             <span class="comment">/</span></div><div class="line"><span class="comment">D</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span> <span class="comment">master</span></div></pre></td></tr></table></figure>
-<p><strong>NOTE</strong>:<br><blockquote><p>git rebase master topic == git checkout topic &amp; git rebase master.<br>When rebase exists, <code>topic</code> will remain the checkout-out branch</p>
-</blockquote></p>
-<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><ol>
-<li>Create a <code>A.txt</code> file in <code>master</code> branch</li>
-<li>Create and change to branch <code>test</code> and create a new file <code>B.txt</code>.</li>
-<li>Back to branch <code>master</code> and then create a new file <code>C.txt</code></li>
-</ol>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">master: A---C</div><div class="line">         \</div><div class="line"><span class="keyword">test:     </span>B</div></pre></td></tr></table></figure>
-<p>The result of following command:(now we are in branch <code>master</code>)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase <span class="built_in">test</span> master</div><div class="line">git rebase <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
-<p>would be:(we still in branch <code>master</code>)<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">      <span class="literal">master</span></div><div class="line">        |</div><div class="line">A---C---B</div><div class="line">        |</div><div class="line">      test</div></pre></td></tr></table></figure></p>
-<p>It works by going to the commen ancestor of the two branches(here is <code>A</code>), getting the diff introduced by each commit of the branch you’re on(here branch <code>test</code>), saving those diffs to temporary files, resetting the current branch to the same commit as the branch you are rebasing onto(branch <code>master</code>, set the HEAD to commit <code>C</code>), then applying each change in turn. Finally go back to branch <code>master</code> and do a fast-forward merge<br><strong>NOTE</strong></p>
-<blockquote>
-<p>Since there exists not diffs, commit <code>B</code> is simply appended to commit <code>C</code></p>
-</blockquote>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Git/2017-09-30-git-rebase-example/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -692,6 +701,14 @@
 
   
 
+    
+      <script id="dsq-count-scr" src="https://jabin-blog.disqus.com/count.js" async></script>
+    
+
+    
+
+  
+
 
 
 
@@ -704,10 +721,6 @@
   
 
 
-
-
-
-  
 
 
 
