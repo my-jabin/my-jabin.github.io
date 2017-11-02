@@ -96,7 +96,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Yanbin&#39;s Blog">
-<meta property="og:url" content="my-jabin.github.io/categories/Android/index.html">
+<meta property="og:url" content="my-jabin.github.io/page/2/index.html">
 <meta property="og:site_name" content="Yanbin&#39;s Blog">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="my-jabin.github.io/categories/Android/"/>
+  <link rel="canonical" href="my-jabin.github.io/page/2/"/>
 
 
 
 
 
-  <title>Category: Android | Yanbin's Blog</title>
+  <title>Yanbin's Blog</title>
   
 
 
@@ -160,7 +160,9 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -287,55 +289,175 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  
-  
-  
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Android<small>Category</small>
-        </h1>
-      </div>
-
+  <section id="posts" class="posts-expand">
+    
       
-        
+
+  
+
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="my-jabin.github.io/Git/2017-09-30-git-rebase-example/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yanbin Hu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yanbin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/Android/2017-09-30-manage-touch-events-in-a-ViewGroup/" itemprop="url">
-              
-                <span itemprop="name">Manage touch events in a ViewGroup</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Git/2017-09-30-git-rebase-example/" itemprop="url">git rebase example</a></h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-30T18:24:18+02:00"
-              content="2017-09-30" >
-          09-30
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-30T14:47:45+02:00">
+                2017-09-30
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
+      
 
+      
+        
+          
+            <p>Assume the following history exists and the current branch is “master”.</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">      <span class="comment">A</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">C</span> <span class="comment">topic</span></div><div class="line"><span class="comment"></span>     <span class="comment">/</span></div><div class="line"><span class="comment">D</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span> <span class="comment">master</span></div></pre></td></tr></table></figure>
+<p>From this point, the result of either of the following commands:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase master</div><div class="line">git rebase master topic</div></pre></td></tr></table></figure>
+<p>would be:</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">              <span class="comment">A'</span><span class="literal">-</span><span class="literal">-</span><span class="comment">B'</span><span class="literal">-</span><span class="literal">-</span><span class="comment">C'</span> <span class="comment">topic</span></div><div class="line"><span class="comment"></span>             <span class="comment">/</span></div><div class="line"><span class="comment">D</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">E</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">F</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="comment">G</span> <span class="comment">master</span></div></pre></td></tr></table></figure>
+<p><strong>NOTE</strong>:<br><blockquote><p>git rebase master topic == git checkout topic &amp; git rebase master.<br>When rebase exists, <code>topic</code> will remain the checkout-out branch</p>
+</blockquote></p>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><ol>
+<li>Create a <code>A.txt</code> file in <code>master</code> branch</li>
+<li>Create and change to branch <code>test</code> and create a new file <code>B.txt</code>.</li>
+<li>Back to branch <code>master</code> and then create a new file <code>C.txt</code></li>
+</ol>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">master: A---C</div><div class="line">         \</div><div class="line"><span class="keyword">test:     </span>B</div></pre></td></tr></table></figure>
+<p>The result of following command:(now we are in branch <code>master</code>)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git rebase <span class="built_in">test</span> master</div><div class="line">git rebase <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p>would be:(we still in branch <code>master</code>)<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">      <span class="literal">master</span></div><div class="line">        |</div><div class="line">A---C---B</div><div class="line">        |</div><div class="line">      test</div></pre></td></tr></table></figure></p>
+<p>It works by going to the commen ancestor of the two branches(here is <code>A</code>), getting the diff introduced by each commit of the branch you’re on(here branch <code>test</code>), saving those diffs to temporary files, resetting the current branch to the same commit as the branch you are rebasing onto(branch <code>master</code>, set the HEAD to commit <code>C</code>), then applying each change in turn. Finally go back to branch <code>master</code> and do a fast-forward merge<br><strong>NOTE</strong></p>
+<blockquote>
+<p>Since there exists not diffs, commit <code>B</code> is simply appended to commit <code>C</code></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
   
   
   
+  </article>
+
+
+    
+  </section>
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 
