@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Open Sans:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="RxJava, RxJava2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="1. What are RxJava and reactive programming In reactive programming, the consumer reacts to the data as it comes in.This is the reason why asynchronous programming is also called reactive programming.">
+<meta name="keywords" content="RxJava, RxJava2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava2 Tutorial Basic">
+<meta property="og:url" content="my-jabin.github.io/RxJava/2018-04-14-RxJava2-Tutorial-Basic/index.html">
+<meta property="og:site_name" content="Yanbin&#39;s Blog">
+<meta property="og:description" content="1. What are RxJava and reactive programming In reactive programming, the consumer reacts to the data as it comes in.This is the reason why asynchronous programming is also called reactive programming.">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/legend.png">
+<meta property="og:image" content="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/flatMap.png">
+<meta property="og:image" content="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/Buffer.png">
+<meta property="og:updated_time" content="2018-04-14T18:38:18.181Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava2 Tutorial Basic">
+<meta name="twitter:description" content="1. What are RxJava and reactive programming In reactive programming, the consumer reacts to the data as it comes in.This is the reason why asynchronous programming is also called reactive programming.">
+<meta name="twitter:image" content="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/legend.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="my-jabin.github.io/RxJava/2018-04-14-RxJava2-Tutorial-Basic/"/>
+
+
+
+
+
+  <title>RxJava2 Tutorial Basic | Yanbin's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109176342-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yanbin's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Stay hungry. Stay foolish.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="my-jabin.github.io/RxJava/2018-04-14-RxJava2-Tutorial-Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yanbin Hu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yanbin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RxJava2 Tutorial Basic</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-14T19:59:04+02:00">
+                2018-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RxJava/" itemprop="url" rel="index">
+                    <span itemprop="name">RxJava</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-What-are-RxJava-and-reactive-programming-In-reactive-programming-the-consumer-reacts-to-the-data-as-it-comes-in"><a href="#1-What-are-RxJava-and-reactive-programming-In-reactive-programming-the-consumer-reacts-to-the-data-as-it-comes-in" class="headerlink" title="1. What are RxJava and reactive programming In reactive programming, the consumer reacts to the data as it comes in."></a>1. What are RxJava and reactive programming In reactive programming, the consumer reacts to the data as it comes in.</h2><p>This is the reason why asynchronous programming is also called reactive programming. Reactive programming allows to propagates event changes to registered observers. &gt;The Observer pattern has done right. ReactiveX is a combination of the best ideas from the Observer pattern, the Iterator pattern, and functional programming. RxJava is a library that lets you create applications in the reactive programming style. At its core, reactive programming provides a clean, efficient way of processing and reacting to streams of real-time data, including data with dynamic values. These data streams don’t necessarily have to take the form of traditional data types, as RxJava pretty much treats everything as a stream of data—everything from variables to properties, caches, and even user input events like clicks and swipes. The data emitted by each stream can either be a value, an error, or a “completed” signal, although you don’t necessarily have to implement the last two.<br><a id="more"></a><br><img src="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/legend.png" title="Reactive programming"></p>
+<p>To create this workflow of data streams and objects that react to them, RxJava extends the Observer software design pattern. Essentially, in RxJava you have <code>Observable</code> objects that emit a stream of data and then terminate, and <code>Observer</code> objects that subscribe to <code>Observables</code>. An <code>Observer</code> receives a notification each time their assigned Observable emits a value, an error, or a completed signal. So at a very high level, RxJava is all about:</p>
+<ul>
+<li>Creating an <code>Observable</code>.</li>
+<li>Giving that <code>Observable</code> some data to emit.</li>
+<li>Creating an <code>Observer</code>.</li>
+<li>Assigning the <code>Observer</code> to an <code>Observable</code>.</li>
+<li>Giving the <code>Observer</code> tasks to perform whenever it receives an emission from its assigned <code>Observable</code>.</li>
+</ul>
+<h2 id="2-Two-key-types-There-are-two-key-types-to-understand"><a href="#2-Two-key-types-There-are-two-key-types-to-understand" class="headerlink" title="2. Two key types There are two key types to understand"></a>2. Two key types There are two key types to understand</h2><p>when working with Rx: <em> <strong>Observable</strong> representing sources of data. </em> <strong>Observer(or subscriber)</strong> listening to the observables. An observable emits items, a subscriber consumes those items.</p>
+<h3 id="2-1-Observables-Observables-are-the-sources-for-the-data"><a href="#2-1-Observables-Observables-are-the-sources-for-the-data" class="headerlink" title="2.1 Observables Observables are the sources for the data."></a>2.1 Observables Observables are the sources for the data.</h3><p>Usually, they start providing data once a subscriber starts listening. An observable may emit any number of items (including zero items). It can terminate either successfully or with an error. Sources may never terminate, for example, an observable for<br>a button click can potentially produce an infinite stream of events. For now, we must understand the <code>Subscribe</code> method. Here is one key overload of the method:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Subscription <span class="title">subscribe</span><span class="params">(Subscriber &lt;? <span class="keyword">super</span> T&gt; subscriber)</span></span></span><br></pre></td></tr></table></figure>
+<p>This is the method that you use to receive the values emitted by the observables. The subscriber is responsible for handling the values. The <code>Subscriber</code> class is an implementation of the <code>Observer</code> interface.</p>
+<p>An <code>Observable</code> pushes 3 kinds of event:</p>
+<ul>
+<li>values;</li>
+<li>Completion, which indicates that no more values will be pushed.</li>
+<li>Errors, if somthing caused the sequence to fail. These events also imply termination.</li>
+</ul>
+<h3 id="2-2-Observer-Subscriber"><a href="#2-2-Observer-Subscriber" class="headerlink" title="2.2 Observer(Subscriber)"></a>2.2 Observer(Subscriber)</h3><p>An observable can have any number of subscribers. If a new item is emitted from the observable, the <code>onNext()</code> method is called on each subscriber. If the observable finishes its data flow successful, the <code>onComplete()</code> method is optionally called on each subscriber. Similar, if the observable finishes its data flow with an error, the <code>onError()</code> method is optionally called on each subscriber. No calls happen after a call to onError or onCompleted.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Observer</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onError</span><span class="params">(java.lang.Throwable e)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Example:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String[] letters = &#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>, <span class="string">"g"</span>&#125;;</span><br><span class="line">Observable&lt;String&gt; observable = Observable.from(letters);</span><br><span class="line">observable.subscribe(</span><br><span class="line">  i -&gt; result += i,  <span class="comment">//OnNext</span></span><br><span class="line">  Throwable::printStackTrace, <span class="comment">//OnError</span></span><br><span class="line">  () -&gt; result += <span class="string">"_Completed"</span> <span class="comment">//OnCompleted</span></span><br><span class="line">);</span><br><span class="line">assertTrue(result.equals(<span class="string">"abcdefg_Completed"</span>));</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-Implementing-Observable"><a href="#2-3-Implementing-Observable" class="headerlink" title="2.3 Implementing Observable"></a>2.3 Implementing Observable</h3><p>It’s not recommended to manually implement <code>Observer</code> or extend <code>Observable</code>. Since RxJava already provides all the building blocks you need. It is simpler and safer to use the many tools that Rx gives you for generating the functionality that you need.</p>
+<h4 id="2-3-1-Creating-an-Observable"><a href="#2-3-1-Creating-an-Observable" class="headerlink" title="2.3.1 Creating an Observable"></a>2.3.1 Creating an Observable</h4><ol>
+<li><p><strong>Observable.just()</strong><br>You can use the <code>.just()</code> operator to convert any object into an Observable. The result <code>Observable</code> will the emit the original object and complete.<br>For example, here we’re creating an <code>Observable</code> that’ll emit a single string to all its <code>Observers</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;String&gt; observable = Observable.just(<span class="string">"Hello World!"</span>);</span><br><span class="line">Subscription subscription = observable.subscribe(</span><br><span class="line">    v -&gt; System.out.println(<span class="string">"Received: "</span> + v),</span><br><span class="line">    e -&gt; System.out.println(<span class="string">"Error: "</span> + e),</span><br><span class="line">    () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Observable.range()</strong><br>You can use the <code>.range()</code> operator to emit a range of sequential integers. The first integer you provider is the initial value, and the second is the number of integers you want to emit. For example</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">0</span>, <span class="number">2</span>);</span><br><span class="line">observable.subscribe(</span><br><span class="line">        v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">        e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">        () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Received:<span class="number">0</span></span><br><span class="line">Received:<span class="number">0</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Observable.from()</strong><br>The <code>.from()</code> operator allows you to convert a collection of objects into an observable stream. You can convert an array into an <code>Observable</code> using <code>Observable.fromArray</code>, a <code>Callable</code> into an <code>Observable</code> using the <code>Observable.fromCallable</code>, an <code>Iterable</code> into an <code>Observable</code> using <code>Observable.fromIterable</code> and a ‘Future’ into an <code>Observable</code> using <code>Observable.fromFuture()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Integer[] array = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Observable&lt;Integer&gt; observable = Observable.fromArray(array);</span><br><span class="line">observable.subscribe(</span><br><span class="line">        v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">        e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">        () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Received:<span class="number">1</span></span><br><span class="line">Received:<span class="number">3</span></span><br><span class="line">Received:<span class="number">5</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+<p><code>Future</code> is a part of the Java framework and you may come acroos them while using frameworks that use concurrency. They are a less powerful concept for concurrency than Rx, since they only return one value.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FutureTask&lt;Integer&gt; f = <span class="keyword">new</span> FutureTask&lt;Integer&gt;(() -&gt; &#123;</span><br><span class="line">	Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">21</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Thread(f).start();</span><br><span class="line"></span><br><span class="line">Observable&lt;Integer&gt; values = Observable.from(f);</span><br><span class="line"></span><br><span class="line">Subscription subscription = values.subscribe(</span><br><span class="line">    v -&gt; System.out.println(<span class="string">"Received: "</span> + v),</span><br><span class="line">    e -&gt; System.out.println(<span class="string">"Error: "</span> + e),</span><br><span class="line">    () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Received: <span class="number">21</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Observable.interval()</strong><br>This operator creates an <code>Observable</code> that emits an <strong>infinite</strong> sequence of ascending integers, with each emission separated by a time interval chosen by you. For example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Long&gt; observable = Observable.interval(<span class="number">1</span>, TimeUnit.SECONDS);</span><br><span class="line">observable.subscribe(</span><br><span class="line">        v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">        e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">        () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Received: <span class="number">0</span></span><br><span class="line">Received: <span class="number">1</span></span><br><span class="line">Received: <span class="number">2</span></span><br><span class="line">Received: <span class="number">3</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>This sequence will not terminate until we unsubscribe.</p>
+</li>
+<li><p><strong>Observable.empty()</strong><br>The <code>empty()</code> operator creats an <code>Observable</code> that emits no items but terminates normally, which can be useful when you need to quickly create an <code>Observable</code> for testing purposes.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;String&gt; observable = Observable.empty();</span><br></pre></td></tr></table></figure>
+<p>More other ways to creat <code>Observable</code> seeing the <a href="http://reactivex.io/documentation/operators.html#creating" target="_blank" rel="noopener">creating observables operators</a></p>
+</li>
+</ol>
+<h2 id="3-Operators"><a href="#3-Operators" class="headerlink" title="3.Operators"></a>3.Operators</h2><h3 id="3-1-Introducing-Operators"><a href="#3-1-Introducing-Operators" class="headerlink" title="3.1 Introducing Operators"></a>3.1 Introducing Operators</h3><p>  RxJava has an enormous collections of operators that are mainly intended to help you <em>modify</em>, <em>filter</em>, <em>merge</em> and <em>transform</em> the data that’s being emiited by your <code>Observables</code>. You could find the complete list of <a href="https://github.com/ReactiveX/RxJava/wiki/Alphabetical-List-of-Observable-Operators" target="_blank" rel="noopener">RxJava operators</a> over at the official github or <a href="http://reactivex.io/documentation/operators.html" target="_blank" rel="noopener">categorized operators</a> in the official website.<br>  It’s allowed to chain multiple operators together. Applying an operators to an <code>Observable</code> typically returns another <code>Observable</code>, so you can just keep applying operators until you get the results you want. In the previous section we talked about the creating <code>Observable</code> operators, in this section we focus on other useful operators.</p>
+<h3 id="3-2-Filtering-Observables"><a href="#3-2-Filtering-Observables" class="headerlink" title="3.2 Filtering Observables"></a>3.2 Filtering Observables</h3><ol>
+<li><p><code>filter</code> takes a predicate function that makes a boolean decision for each value emitted. If the decision if <code>false</code>, the item is omitted from the filtered sequence.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; values = Observable.range(<span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line">values.filter(v -&gt; v % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Received:<span class="number">0</span></span><br><span class="line">Received:<span class="number">2</span></span><br><span class="line">Received:<span class="number">4</span></span><br><span class="line">Received:<span class="number">6</span></span><br><span class="line">Received:<span class="number">8</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>distinct</code> operator filters an <code>Observable</code> by only allowing items through that have not already been emitted.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Integer[] array = &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">Observable&lt;Integer&gt; values = Observable.fromArray(array);</span><br><span class="line">values.distinct()</span><br><span class="line">        .subscribe(</span><br><span class="line">                v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Received:<span class="number">1</span></span><br><span class="line">Received:<span class="number">2</span></span><br><span class="line">Received:<span class="number">3</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>DistinceUntilChanged</code> operator compares emitted items from the source <code>Observable</code> against their immediate predecessors in order to determine whether or not they are distince.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Integer[] array = &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>&#125;;</span><br><span class="line">Observable&lt;Integer&gt; values = Observable.fromArray(array);</span><br><span class="line">values.distinctUntilChanged()</span><br><span class="line">        .subscribe(</span><br><span class="line">                v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Received:<span class="number">1</span></span><br><span class="line">Received:<span class="number">2</span></span><br><span class="line">Received:<span class="number">3</span></span><br><span class="line">Received:<span class="number">2</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>ignoreElements</code> will ignore every items, but allows its termination notification(either <code>onError</code> or <code>onCompleted</code>) to pass through unchanged.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; values = Observable.range(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">values.ignoreElements().subscribe(</span><br><span class="line">        ()-&gt; System.out.println(<span class="string">"Completed"</span>),</span><br><span class="line">        e-&gt; System.out.println(<span class="string">"error"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>take</code> takes the first <em>n</em> items emitted by the <code>Observable</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; values = Observable.range(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">values.take(<span class="number">2</span>).subscribe(</span><br><span class="line">        v -&gt; System.out.println(<span class="string">"Recevied: "</span> + v),</span><br><span class="line">        e-&gt; System.out.println(<span class="string">"error"</span>),</span><br><span class="line">        ()-&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Recevied: <span class="number">0</span></span><br><span class="line">Recevied: <span class="number">1</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>skip</code> skips first <em>n</em> items emitted by the <code>Observable</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; values = Observable.range(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">values.skip(<span class="number">2</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                v -&gt; System.out.println(<span class="string">"Recevied: "</span> + v),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"error"</span>),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Recevied: <span class="number">2</span></span><br><span class="line">Recevied: <span class="number">3</span></span><br><span class="line">Recevied: <span class="number">4</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>takeWhile</code> takes items emitted by <code>Observable</code> while a predicate is <code>true</code>, once the predicate function becomes <code>false</code>, it stops taking the items.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; values = Observable.range(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">values.takeWhile(v -&gt; v &lt; <span class="number">2</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                v -&gt; System.out.println(<span class="string">"Recevied: "</span> + v),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"error"</span>),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Recevied: <span class="number">0</span></span><br><span class="line">Recevied: <span class="number">1</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>skipWhile</code> skip items while a predicate function is <code>true</code>,  once the predicate function becomes <code>false</code>, it stops skipping the items.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; values = Observable.range(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">values.skipWhile(v -&gt; v &lt; <span class="number">2</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                v -&gt; System.out.println(<span class="string">"Recevied: "</span> + v),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"error"</span>),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Recevied: <span class="number">2</span></span><br><span class="line">Recevied: <span class="number">3</span></span><br><span class="line">Recevied: <span class="number">4</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>takeUntil</code> takes the items emitted by the <code>Observable</code> from the beginning until the predicate function returns <code>true</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">observable.takeUntil( v -&gt; v==<span class="number">2</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">        v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">        e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">        () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Received:<span class="number">0</span></span><br><span class="line">Received:<span class="number">1</span></span><br><span class="line">Received:<span class="number">2</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>skipUntil</code> skips the items emitted by the source <code>Observable</code> until a second <code>Observable</code> emits an item, at which point <code>skipUntil</code> begins to take the items of the source <code>Observable</code></p>
+</li>
+</ol>
+<h3 id="3-3-Conditional-and-Boolean-Operators"><a href="#3-3-Conditional-and-Boolean-Operators" class="headerlink" title="3.3 Conditional and Boolean Operators"></a>3.3 Conditional and Boolean Operators</h3><p>  Operators that evaluate one or more <code>observables</code> or items emitted by <code>Observables</code></p>
+<ol>
+<li><p><code>All</code> determine that whether all items emitted by an <code>Observable</code> meet some criteria and returns a boolean value based on tan evaluation of that item. <code>All</code> returns an <code>Observable</code> that emits only a single boolean value. The signature is:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> Observable&lt;java.lang.Boolean&gt; all(Func1&lt;? <span class="keyword">super</span> T,java.lang.Boolean&gt; predicate)</span><br></pre></td></tr></table></figure>
+<p>Example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">observable.all( v -&gt; v &lt; <span class="number">10</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">               result -&gt; System.out.println(result),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Error: "</span> + e)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>contains</code> determine whether an <code>Observable</code> emits a particular item or not.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">0</span>, <span class="number">2</span>);</span><br><span class="line">observable.contains( <span class="number">3</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                result -&gt; System.out.println(result),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Error: "</span> + e)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>defaultIfEmpty</code> emits items from the source <code>Observable</code>, or a default item if the source <code>Observable</code> emits nothing.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.empty();</span><br><span class="line">observable.defaultIfEmpty(<span class="number">1</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>));</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Received:<span class="number">1</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>sequenceEqual</code> determine whether two <code>Observable</code> emit the same sequence of items.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; ints = Observable.range(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">Observable&lt;String&gt; strings = Observable.just(<span class="string">"1"</span>,<span class="string">"2"</span>,<span class="string">"3"</span>);</span><br><span class="line">Observable</span><br><span class="line">        .sequenceEqual(ints,strings, (i,s) -&gt; s.equals(String.valueOf(i)))</span><br><span class="line">        .subscribe(</span><br><span class="line">                result -&gt; System.out.println(result),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Error: "</span> + e)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>amb</code> operator. Given two or more source <code>Observable</code>, emit all of the items from only the first of these <code>Observables</code> to emit an item or notification. It will pass throught the emissions and notifications of exactly one of theses Observables: the first one that sends a notification to <code>Amb</code>, either by emitting an item or sending an <code>onError</code> or <code>onCompleted</code> notification. <code>Amb</code> will ignore and discard the emissions and notifications of all of the other source observabeles.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Observable interval = Observable.interval(<span class="number">200</span>,TimeUnit.MILLISECONDS);</span><br><span class="line">Observable&lt;Integer&gt; ints = Observable.range(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">Observable intervalDelay = Observable.interval(<span class="number">1000</span>,<span class="number">1</span>,TimeUnit.MILLISECONDS);</span><br><span class="line">Observable.ambArray(interval,intervalDelay,ints)</span><br><span class="line">        .subscribe(</span><br><span class="line">                v -&gt; System.out.println(<span class="string">"Received:"</span> + v),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Errir"</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>));</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Received:<span class="number">1</span></span><br><span class="line">Received:<span class="number">2</span></span><br><span class="line">Received:<span class="number">3</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-4-Transforming-observables"><a href="#3-4-Transforming-observables" class="headerlink" title="3.4 Transforming observables"></a>3.4 Transforming observables</h3><p>  Operators that transform items that are emitted by an <code>Observable</code>. It’s common to transform the items to the format that we want.</p>
+<ol>
+<li><p><code>map</code> is the basic transformation operator. It takes a function which takes an item and return a new item of any type. The returned observable is composed of the values returned by the transformation function.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">observable.map(i -&gt; <span class="string">"String: "</span>+i)</span><br><span class="line">        .subscribe(</span><br><span class="line">                result -&gt; System.out.println(result),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Error: "</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String: <span class="number">1</span></span><br><span class="line">String: <span class="number">2</span></span><br><span class="line">String: <span class="number">3</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>flatMap</code> transformation operator takes items from the source observable and for each of them, returns a new observable that emits the new values. The returned observables will be flatten into a single <code>Observable</code>. <code>flatMap</code> merges the emissions of these resulting observables, emitting these merged result as its own sequence.</p>
+<img src="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/flatMap.png" title="flatMap">
+<p>Note that <code>flatMap</code> merges the emissions of these observables, so that they may interleave.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line">observable.flatMap( i -&gt; Observable.range(<span class="number">0</span>,i))</span><br><span class="line">        .subscribe(</span><br><span class="line">                result -&gt; System.out.println(result),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Error: "</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>buffer</code> periodically gather items emitted by an Observable into bundles and emit these bundles rather then emitting the items one at a time.</p>
+<ul>
+<li><p><code>buffer(int count)</code> emits ono-overlapping buffers in the forms of <code>List</code>s, each of which contains at most <code>count</code> items from the source observables(the final emitted <code>List</code> may have fewer than <code>count</code> items).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">observable.buffer(<span class="number">2</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                list -&gt; System.out.println(list),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Error: "</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">[<span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">[<span class="number">4</span>]</span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>buffer(int count, int skip)</code> creates a new buffer starting with the first emitted item from the source observable, and every <code>skip</code> items thereafter, and fills each buffer with <code>count</code> items. It emits these buffer as <code>List</code>s. Depending on the values of <code>count</code> and <code>skip</code> these buffers may overlap(multiple buffers may contains the same item), or they may have gaps.<br>Example <code>buffer(3,2)</code> means creates buffers that each buffer contains 3 elements, and skip 2 items to create a new buffer.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line">observable.buffer(<span class="number">3</span>,<span class="number">2</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                list -&gt; System.out.println(list),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Error: "</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">[<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">[<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]</span><br><span class="line">[<span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>groupBy</code> divide an Observable into a set of Observables that each emit a different subset of items from the original observable.<br>Example: group a range of numbers from 0 to 9 by even and odd. Print the last item of each group.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Observable&lt;Integer&gt; observable = Observable.range(<span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line">observable.groupBy(v -&gt;  v% <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">        .subscribe(</span><br><span class="line">                group -&gt; group.takeLast(<span class="number">1</span>).subscribe(v-&gt; System.out.println(v)),</span><br><span class="line">                e -&gt; System.out.println(<span class="string">"Error: "</span> + e),</span><br><span class="line">                () -&gt; System.out.println(<span class="string">"Completed"</span>)</span><br><span class="line">        );</span><br></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line">Completed</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-5-Aggregate-operators"><a href="#3-5-Aggregate-operators" class="headerlink" title="3.5 Aggregate operators"></a>3.5 Aggregate operators</h3><p>  Operators that operate on the <em>entire sequence</em> of items emitted by an Observable. Operators like <code>Count</code>, <code>Average</code>, <code>Max</code>, <code>Min</code> and <code>Sum</code> return a sequence with a single value.</p>
+<img src="/RxJava/2018-04-14-RxJava2-Tutorial-Basic/Buffer.png" title="buffer">
+<h2 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference :"></a>4. Reference :</h2><p>  <a href="http://www.vogella.com/tutorials/RxJava/article.html" target="_blank" rel="noopener">http://www.vogella.com/tutorials/RxJava/article.html</a><br>  <a href="http://www.baeldung.com/rx-java" target="_blank" rel="noopener">http://www.baeldung.com/rx-java</a><br>  <a href="https://github.com/Froussios/Intro-To-RxJava" target="_blank" rel="noopener">https://github.com/Froussios/Intro-To-RxJava</a><br>  <a href="https://code.tutsplus.com/tutorials/getting-started-with-rxjava-20-for-android--cms-28345" target="_blank" rel="noopener">https://code.tutsplus.com/tutorials/getting-started-with-rxjava-20-for-android--cms-28345</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RxJava-RxJava2/" rel="tag"># RxJava, RxJava2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/JavaScript/2017-11-03-Object-to-primitive-conversion/" rel="next" title="Object to primitive conversion">
+                <i class="fa fa-chevron-left"></i> Object to primitive conversion
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Yanbin Hu" />
+          <p class="site-author-name" itemprop="name">Yanbin Hu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/my-jabin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-What-are-RxJava-and-reactive-programming-In-reactive-programming-the-consumer-reacts-to-the-data-as-it-comes-in"><span class="nav-number">1.</span> <span class="nav-text">1. What are RxJava and reactive programming In reactive programming, the consumer reacts to the data as it comes in.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Two-key-types-There-are-two-key-types-to-understand"><span class="nav-number">2.</span> <span class="nav-text">2. Two key types There are two key types to understand</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Observables-Observables-are-the-sources-for-the-data"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Observables Observables are the sources for the data.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Observer-Subscriber"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Observer(Subscriber)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Implementing-Observable"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Implementing Observable</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-Creating-an-Observable"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 Creating an Observable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Operators"><span class="nav-number">3.</span> <span class="nav-text">3.Operators</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Introducing-Operators"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Introducing Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Filtering-Observables"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Filtering Observables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Conditional-and-Boolean-Operators"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 Conditional and Boolean Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Transforming-observables"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 Transforming observables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Aggregate-operators"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 Aggregate operators</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Reference"><span class="nav-number">4.</span> <span class="nav-text">4. Reference :</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yanbin Hu</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://jabin-blog.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'my-jabin.github.io/RxJava/2018-04-14-RxJava2-Tutorial-Basic/';
+          this.page.identifier = '/RxJava/2018-04-14-RxJava2-Tutorial-Basic/';
+          this.page.title = 'RxJava2 Tutorial Basic';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://jabin-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

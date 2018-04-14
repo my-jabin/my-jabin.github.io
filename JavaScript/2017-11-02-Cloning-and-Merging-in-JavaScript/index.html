@@ -417,12 +417,12 @@
 
       
         <h1 id="Cloning-and-merging-Object-assign"><a href="#Cloning-and-merging-Object-assign" class="headerlink" title="Cloning and merging, Object.assign"></a>Cloning and merging, Object.assign</h1><p>Copying an object variable creates one more reference to the same object. What if we need to duplicate an object?</p>
-<p>We can use the method <code>Object.assign</code> for that:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.assign(dest[,src1,src2,...])</div></pre></td></tr></table></figure></p>
-<p>It copies the properties of all object <code>src1, src2, ...</code> into <code>dest</code>. In other words, properties of all arguments starting from the 2nd are copied into the 1st, then it returns <code>dest</code><br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">"John"</span>&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> permission1 = &#123; <span class="attr">canView</span>: <span class="literal">true</span>&#125;;</div><div class="line"><span class="keyword">let</span> permission2 = &#123; <span class="attr">canEdit</span>: <span class="literal">true</span>&#125;;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.assign(user, permission1, permisson2);</div><div class="line"><span class="comment">// now user = &#123;name:"John", canView: true, canEdit: true&#125;</span></div></pre></td></tr></table></figure></p>
-<p>If the receiving object (<code>user</code>) already has the same named property, it will overwritten:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">"John"</span> &#125;;</div><div class="line"></div><div class="line"><span class="comment">// overwrite name, add isAdmin</span></div><div class="line"><span class="built_in">Object</span>.assign(user, &#123; <span class="attr">name</span>: <span class="string">"Pete"</span>, <span class="attr">isAdmin</span>: <span class="literal">true</span> &#125;);</div><div class="line"></div><div class="line"><span class="comment">// now user = &#123; name: "Pete", isAdmin: true &#125;</span></div></pre></td></tr></table></figure></p>
-<p>Until now we assumed that all properties of <code>user</code> are primitive, But properties can be references to other object. What do do with them? Like this:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123;</div><div class="line">name: <span class="string">"John"</span>,</div><div class="line">sizes: &#123;</div><div class="line">height: <span class="number">182</span>,</div><div class="line">width: <span class="number">50</span></div><div class="line">&#125;&#125;;</div><div class="line"></div><div class="line">alert( user.sizes.height ); <span class="comment">// 182</span></div></pre></td></tr></table></figure></p>
-<p>Now it’s not enough to copy <code>clone.sizes = user.sizes</code>, because the <code>user.sizes</code> is an object, it will be copied by reference. So <code>clone</code> and <code>user</code> will share the same sizes. Like this:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> user = &#123;</div><div class="line">  name: <span class="string">"John"</span>,</div><div class="line">  sizes: &#123;</div><div class="line">    height: <span class="number">182</span>,</div><div class="line">    width: <span class="number">50</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> clone = <span class="built_in">Object</span>.assign(&#123;&#125;, user);</div><div class="line"></div><div class="line">alert( user.sizes === clone.sizes ); <span class="comment">// true, same object</span></div><div class="line"></div><div class="line"><span class="comment">// user and clone share sizes</span></div><div class="line">user.sizes.width++;       <span class="comment">// change a property from one place</span></div><div class="line">alert(clone.sizes.width); <span class="comment">// 51, see the result from the other one</span></div></pre></td></tr></table></figure></p>
-<p>To fix that, we use “deep cloning” that examine each value of <code>user[key]</code>, if it’s an object, replicate its structure as well.<br>There’s a standard algorithm for deep cloning that handles the case above and more complex cases, called the <strong>Structured cloning algorithm</strong>. We can use an implementation of a JavaScript library <a href="https://lodash.com/" target="_blank" rel="external">lodash</a>, the method is called <a href="https://lodash.com/docs#cloneDeep" target="_blank" rel="external">_.cloneDeep(obj)</a></p>
+<p>We can use the method <code>Object.assign</code> for that:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(dest[,src1,src2,...])</span><br></pre></td></tr></table></figure></p>
+<p>It copies the properties of all object <code>src1, src2, ...</code> into <code>dest</code>. In other words, properties of all arguments starting from the 2nd are copied into the 1st, then it returns <code>dest</code><br><a id="more"></a><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">"John"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> permission1 = &#123; <span class="attr">canView</span>: <span class="literal">true</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> permission2 = &#123; <span class="attr">canEdit</span>: <span class="literal">true</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.assign(user, permission1, permisson2);</span><br><span class="line"><span class="comment">// now user = &#123;name:"John", canView: true, canEdit: true&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>If the receiving object (<code>user</code>) already has the same named property, it will overwritten:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123; <span class="attr">name</span>: <span class="string">"John"</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// overwrite name, add isAdmin</span></span><br><span class="line"><span class="built_in">Object</span>.assign(user, &#123; <span class="attr">name</span>: <span class="string">"Pete"</span>, <span class="attr">isAdmin</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// now user = &#123; name: "Pete", isAdmin: true &#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>Until now we assumed that all properties of <code>user</code> are primitive, But properties can be references to other object. What do do with them? Like this:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">name: <span class="string">"John"</span>,</span><br><span class="line">sizes: &#123;</span><br><span class="line">height: <span class="number">182</span>,</span><br><span class="line">width: <span class="number">50</span></span><br><span class="line">&#125;&#125;;</span><br><span class="line"></span><br><span class="line">alert( user.sizes.height ); <span class="comment">// 182</span></span><br></pre></td></tr></table></figure></p>
+<p>Now it’s not enough to copy <code>clone.sizes = user.sizes</code>, because the <code>user.sizes</code> is an object, it will be copied by reference. So <code>clone</code> and <code>user</code> will share the same sizes. Like this:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123;</span><br><span class="line">  name: <span class="string">"John"</span>,</span><br><span class="line">  sizes: &#123;</span><br><span class="line">    height: <span class="number">182</span>,</span><br><span class="line">    width: <span class="number">50</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> clone = <span class="built_in">Object</span>.assign(&#123;&#125;, user);</span><br><span class="line"></span><br><span class="line">alert( user.sizes === clone.sizes ); <span class="comment">// true, same object</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// user and clone share sizes</span></span><br><span class="line">user.sizes.width++;       <span class="comment">// change a property from one place</span></span><br><span class="line">alert(clone.sizes.width); <span class="comment">// 51, see the result from the other one</span></span><br></pre></td></tr></table></figure></p>
+<p>To fix that, we use “deep cloning” that examine each value of <code>user[key]</code>, if it’s an object, replicate its structure as well.<br>There’s a standard algorithm for deep cloning that handles the case above and more complex cases, called the <strong>Structured cloning algorithm</strong>. We can use an implementation of a JavaScript library <a href="https://lodash.com/" target="_blank" rel="noopener">lodash</a>, the method is called <a href="https://lodash.com/docs#cloneDeep" target="_blank" rel="noopener">_.cloneDeep(obj)</a></p>
 
       
     </div>
@@ -453,8 +453,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Xamarin-Forms/2017-10-23-Expandable-ListView/" rel="next" title="Expandable ListView">
-                <i class="fa fa-chevron-left"></i> Expandable ListView
+              <a href="/other/2017-11-02-Garbage-Collection-in-JavaScript/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -463,8 +463,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/JavaScript/2017-11-02-Garbage-Collection-in-JavaScript/" rel="prev" title="Garbage Collection in JavaScript">
-                Garbage Collection in JavaScript <i class="fa fa-chevron-right"></i>
+              <a href="/JavaScript/2017-11-03-Object-to-primitive-conversion/" rel="prev" title="Object to primitive conversion">
+                Object to primitive conversion <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -549,7 +549,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -560,7 +560,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -571,7 +571,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -642,7 +642,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
