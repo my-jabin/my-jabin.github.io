@@ -7,7 +7,7 @@
 
 <html class="theme-next muse use-motion" lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -148,7 +148,7 @@
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-109176342-1', 'auto');
   ga('send', 'pageview');
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -169,7 +169,7 @@
     
   
 
-  <div class="container sidebar-position-left 
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
    page-home 
  ">
     <div class="headband"></div>
@@ -299,6 +299,250 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="my-jabin.github.io/Algorithm/2018-04-18-ISAM-and-B-trees/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yanbin Hu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yanbin's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Algorithm/2018-04-18-ISAM-and-B-trees/" itemprop="url">ISAM and B+ trees</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T16:42:52+02:00">
+                2018-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Algorithm/2018-04-18-ISAM-and-B-trees/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="/Algorithm/2018-04-18-ISAM-and-B-trees/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>How could we search the query in a certain range?<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span>   CUSTOMERS</span><br><span class="line"><span class="keyword">WHERE</span>  ZIPCODE <span class="keyword">BETWEEN</span> <span class="number">8880</span> <span class="keyword">AND</span> <span class="number">8999</span></span><br></pre></td></tr></table></figure></p>
+<p>We could</p>
+<ol>
+<li>sort the table on disk(in ZIPCODE order)</li>
+<li>use binary search to find the <code>8880</code>, then sequential scan until ZIPCODE &lt; 8999</li>
+</ol>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/1.png">
+<p>We need to read log(#tuple) tuples during the binary search phase. Once we find the lower range limit, we start sequential scan until the upper limit. If the range is huge, the initial binary search can be quite expensive, since the cost is proportional to the number of pages fetched.</p>
+<p>In this article we introduce two index data structures, called ISAM and B+ tree. These structures provide efficient support for range selection, insertion and deletion. They also support for equality selections, although they are not as efficient as hash-based indexes.</p>
+<h2 id="Indexed-Sequential-Access-Method-ISAM"><a href="#Indexed-Sequential-Access-Method-ISAM" class="headerlink" title="Indexed Sequential Access Method(ISAM)"></a>Indexed Sequential Access Method(ISAM)</h2><p>We use the <code>index file</code>, its structures is as following. Pairs of the form <key, pointer=""> is referred as <code>entry</code>. <code>Key</code> is the minimal value on the page that pointer points to.</key,></p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/2.png">
+<p>Note that each index file contains more entries and each key serves as a <em>sperator</em> for the content of the pages pointed to by the pointer to its left and right.</p>
+<p><strong>One-level ISAM structure</strong></p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/3.png">
+<p>To support range selection, we search on the index file for a key of lower limit. Then we start a sequential scan of the data file from the page pointed to by the entry pointer.</p>
+<p>It’s faster searching on the index file then on the data file, because the size of the index file is much more smaller then the data file size.</p>
+<p><strong>Multi-level ISAM structure</strong></p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/4.png">
+<p>If we want to insert some records into database, overflow pages might be created in order to insert data into. The ISAM tree remains <strong>static</strong>, so insertions and deletions in the data file do not affect the tree layers.</p>
+<p>If a new record is going to be inserted and there is no space left on the associated page, we need to create a overflow page and hang it to the leaf page.</p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/5.png">
+<p>Note that records on the overflow pages are not ordered in general.</p>
+<p>Example:<br>We insert the records with key 23,48,41,42.</p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/6.png">
+<p>Problems of ISAM:</p>
+<ul>
+<li>Maintenance of the overflow pages is required and records in the overflow pages is not ordered. Cost is expensive.</li>
+<li>ISAM tree lose the balance after updating. It might lead to low performance.</li>
+<li>ISAM tree is static, the non-leaf levels remains the same.</li>
+</ul>
+<h2 id="B-tree"><a href="#B-tree" class="headerlink" title="B+ tree"></a>B+ tree</h2><p>The B+ tree is derived from the ISAM tree, but is fully dynamic with respect to updates:</p>
+<ul>
+<li>Search performance is only dependent on the height of the B+ tree.</li>
+<li>No overflow pages, B+ tree remains balance.</li>
+<li>B+ tree offers efficient insert/delete procedures, the underlying data file can grow/shrink dynamically</li>
+<li>B+ tree nodes(desipte the root page) are guaranteed to have a minimun occupany of 50%.</li>
+</ul>
+<p>B+ tree is similar to ISAM tree, but</p>
+<ul>
+<li>the leaf nodes are connected via a <strong>double-linked list</strong></li>
+<li>leaves may contain actual data records or just <strong>reference</strong> to records.(reference is the common case)</li>
+</ul>
+<p>Each node of the B+ tree contains <em>n</em> entries, where $d \leq n \leq 2d$. The value <em>d</em> is a parameter of the B+ tree, called the <em>order</em> of the tree and is a measure of the capacity of a tree node. The root node is the only exception to this requirement on the number of entries: for the root, it is simply required that $1 \leq n \leq 2d$</p>
+<p>Note that each node contains <em>n+1</em> pointers. Pointer $p_i$( $1 \leq i \leq i$) points to a subtree in which all key value <em>k</em> are $k_i \leq k &lt; k_i+1$</p>
+<p>Example:<br><img src="/Algorithm/2018-04-18-ISAM-and-B-trees/7.png"></p>
+<h3 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h3><p>If we want to insert a record, we should:</p>
+<ul>
+<li>find the leaf page where it belongs.</li>
+<li>if the page has enough space, simply insert it.</li>
+<li>otherwise node p must be split into p and p’ and a new separator has to be inserted into the parent of p. Splitting happens recursively and may eventually lead to a split of root node.</li>
+<li>distribute then entries of p and the new entry <k,p> onto pages p and p’</k,p></li>
+</ul>
+<p>We use the above example to demonstrate the insertion process. Suppose we want to insert record with key = 8 into the B+ tree.</p>
+<ul>
+<li>The minimal key value in the root page is 13, then 8 should be inserted into the page that the left pointer of 13 points to. It’s the node with value {2,3,5,7}</li>
+<li>The page has no more space, it has to be split into two pages. Entries {2,3} remains on page p, entries {5,7,8} go to new page p’.</li>
+<li>Since we spilt a page, a new separator is also created, the value of the separator is the value of the first entry of the new page p’, here is 5.</li>
+<li>Insert separator into parent node. Since parent node is also full, it has to be split too. If the parent is not a root node, it splits like a normal node. If it’s a root node, it splits a little bit different.</li>
+</ul>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/8.png">
+<p><strong>Root node split</strong>:<br>Now the root node should be split, if the new separator is inserted, it has {5,13,17,24,30}. We simply create a new root node which hold only the middle entry. Here entry 17 is pushed up.</p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/9.png">
+<p>Note that, splitting the old root and creating a new root node is the <em>only</em> situation in which the B+ tree height increase. The B+ tree remains balanced.</p>
+<h3 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h3><p>Deletion is the opposite to the insertion.</p>
+<p>Here we denote $m$ the number of entries of page p and $d$ is the order of B+ tree.<br>To delete a record with key <em>k</em></p>
+<ul>
+<li>find the page where <em>k</em> belongs to.</li>
+<li>if $m&gt;d$, then page p has enough occupancy, simply delete <em>k</em> from page p.</li>
+<li>otherwise borrow a entry from its right(left) sibling</li>
+<li>If its right(left) sibling has less then $d$ entries, merging leaf nodes is required.</li>
+</ul>
+<p>Example:</p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/10.png">
+<p>If we continue to delete entry 20</p>
+<ul>
+<li>page p is underflow(m=1 &lt; 2=d). We now borrow an entry 24 from its right sibling p’(p’ is not underflow since it has 3 entries)</li>
+<li>The smallest key value(27) on page p’ is the new separator of p and p’ in their common parent.</li>
+</ul>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/11.png">
+<p>Now we continue to delete 24 from page p. We cannot borrow an entry from its sibling since its sibling is underflow. We should merge those two pages p and p’.</p>
+<ul>
+<li>Move all entries from p’ to p, then delete page p’.</li>
+<li>Separator 27 between p and p’ is no longer needed and thus deleted from the parent.</li>
+</ul>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/12.png">
+<p>However the parent page has only one entry 30 and is thus underflow, it should borrow one entry from its left sibling, but its sibling has only <em>d=2</em> entries, thus those two pages has to be merged. It leads to the merge of root node.</p>
+<p><strong>Root merge</strong></p>
+<p>We simply pull the entry in the root page down to form a new merged node. The old root node is deleted and the new merged node becomes the root node.</p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/13.png">
+<p>Finally the B+ tree looks like:</p>
+<img src="/Algorithm/2018-04-18-ISAM-and-B-trees/14.png">
+<p>Note that this is the only situation in which the B+ tree height decreases. The B+ tree remains balanced.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -908,163 +1152,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="my-jabin.github.io/Xamarin-Forms/2017-10-23-Expandable-ListView/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yanbin Hu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yanbin's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Xamarin-Forms/2017-10-23-Expandable-ListView/" itemprop="url">Expandable ListView</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-23T20:42:38+02:00">
-                2017-10-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Xamarin-Forms/" itemprop="url" rel="index">
-                    <span itemprop="name">Xamarin.Forms</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/Xamarin-Forms/2017-10-23-Expandable-ListView/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="/Xamarin-Forms/2017-10-23-Expandable-ListView/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Xamarin-Forms-Expandable-ListView"><a href="#Xamarin-Forms-Expandable-ListView" class="headerlink" title="Xamarin.Forms Expandable ListView"></a>Xamarin.Forms Expandable ListView</h1><p>This demo explain how to create a expandable ListView with MVVM pattern using Xamarin.Forms. The ideal is from <a href="http://www.compliancestudio.io/blog/xamarin-forms-expandable-listview" target="_blank" rel="noopener">this blog</a>. If you prefer first to know how to create a expandable ListView without MVVM pattern, please read the blog, and then go back to read this one.<br>The following gif shows the result of this demo.<br><img src="/Xamarin-Forms/2017-10-23-Expandable-ListView/expandableListView.gif"><br></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/Xamarin-Forms/2017-10-23-Expandable-ListView/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1115,7 +1202,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1126,7 +1213,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -1137,7 +1224,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -1661,6 +1748,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
 
   
 
